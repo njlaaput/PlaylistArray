@@ -1,4 +1,5 @@
 package playlistarray;
+import java.util.Scanner;
 
 public class PlaylistArray {
     public static void main(String[] args) {
@@ -52,5 +53,29 @@ class Playlist {
                 + " - " + playlist[i].getArtis()
                 + " (" + playlist[i].getDurasi() + " menit)");
         }
+    }
+
+    // Menambahkan lagu baru ke playlist
+    public void tambahLagu() {
+        if (jumlahLagu >= playlist.length) {
+            System.out.println("Playlist sudah penuh.");
+            return;
+        }
+
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Masukkan judul lagu: ");
+        String judul = input.nextLine();
+
+        System.out.print("Masukkan artis: ");
+        String artis = input.nextLine();
+
+        System.out.print("Masukkan durasi (menit): ");
+        double durasi = input.nextDouble();
+
+        playlist[jumlahLagu] = new Lagu(judul, artis, durasi);
+        jumlahLagu++;
+
+        System.out.println("Lagu berhasil ditambahkan!");
     }
 }
