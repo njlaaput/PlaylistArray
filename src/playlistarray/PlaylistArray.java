@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class PlaylistArray {
     public static void main(String[] args) {
         Playlist p = new Playlist();
+        p.tambahLagu(); //testing insertion
         p.tampilkanSemuaLagu(); // testing sementara
     }
 }
