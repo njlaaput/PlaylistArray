@@ -30,7 +30,7 @@ public class PlaylistArray { //class menu playlist untuk memilih fungsi yang dii
                 case 5: System.out.println("Program selesai."); break;
                 default: System.out.println("Pilihan tidak valid.");
             }
-        } while (pilihan != 0);
+        } while (pilihan != 5);
     }
 }
 
@@ -59,7 +59,7 @@ class Lagu {
     }
 }
 
-class Playlist { //membuat batas maksimal lagu pada playlist 
+class Playlist { //membuat playlist dan batas maksimal lagu pada playlist 
     private static final int MAKS = 10;
     private Lagu[] playlist = new Lagu[MAKS];
     private int jumlahLagu = 0;
@@ -108,7 +108,7 @@ class Playlist { //membuat batas maksimal lagu pada playlist
         return -1;
     }
 
-    public void cariLagu() {//mencari lagu dalam playlist
+    public void cariLagu() { // mencari lagu dalam playlist
         if (jumlahLagu == 0) {
             System.out.println("Playlist masih kosong.");
             return;
@@ -132,7 +132,9 @@ class Playlist { //membuat batas maksimal lagu pada playlist
         }
         playlist[jumlahLagu] = bacaLagu();
         jumlahLagu++;
-        System.out.println("Lagu berhasil ditambahkan!");
+        urutkanBerdasarkanDurasi();
+        System.out.println("Lagu berhasil ditambahkan");
+
     }
 
     private Lagu bacaLagu() { //menambahkan lagu dan membuat array
@@ -142,6 +144,26 @@ class Playlist { //membuat batas maksimal lagu pada playlist
         String artis = input.nextLine().trim();
         double durasi = bacaDurasi();
         return new Lagu(judul, artis, durasi);
+    }
+
+    // mengurutkan lagu berdasarkan durasi (ascending) dengan Bubble Sort
+    private void urutkanBerdasarkanDurasi() {
+        if (jumlahLagu < 2) return;
+
+        for (int i = 0; i < jumlahLagu - 1; i++) {
+            boolean adaTukar = false;
+
+                     for (int j = 0; j < jumlahLagu - 1 - i; j++) {
+                if (playlist[j].getDurasi() > playlist[j + 1].getDurasi()) {
+                    Lagu temp = playlist[j];
+                    playlist[j] = playlist[j + 1];
+                    playlist[j + 1] = temp;
+                    adaTukar = true;
+                }
+            }
+
+            if (!adaTukar) break;
+        }
     }
 
     public void hapusLagu() {//menghapus lagu pada playlist
