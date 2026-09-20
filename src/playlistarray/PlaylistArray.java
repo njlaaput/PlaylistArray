@@ -4,8 +4,12 @@ import java.util.Scanner;
 public class PlaylistArray {
     public static void main(String[] args) {
         Playlist p = new Playlist();
-        p.tambahLagu(); //testing insertion
-        p.tampilkanSemuaLagu(); // testing sementara
+        p.tambahLagu(); // input lagu pertama
+        p.tambahLagu(); // input lagu kedua
+        p.tampilkanSemuaLagu();
+
+        p.hapusLagu();  // coba hapus salah satu judul yang tadi diinput
+        p.tampilkanSemuaLagu(); // pastikan lagu terhapus dan sisanya tetap rapat
     }
 }
 
@@ -78,5 +82,43 @@ class Playlist {
         jumlahLagu++;
 
         System.out.println("Lagu berhasil ditambahkan!");
+    }
+
+    // Menghapus lagu berdasarkan judul yang dimasukkan pengguna,
+    // lalu menggeser elemen setelahnya agar array tetap rapat
+    public void hapusLagu() {
+        if (jumlahLagu == 0) {
+            System.out.println("Playlist masih kosong, tidak ada yang bisa dihapus.");
+            return;
+        }
+
+        Scanner input = new Scanner(System.in);
+        System.out.print("Masukkan judul lagu yang ingin dihapus: ");
+        String judulDicari = input.nextLine();
+
+        // 1. Cari posisi lagu yang judulnya cocok
+        int indexDitemukan = -1;
+        for (int i = 0; i < jumlahLagu; i++) {
+            if (playlist[i].getJudul().equalsIgnoreCase(judulDicari)) {
+                indexDitemukan = i;
+                break;
+            }
+        }
+
+        if (indexDitemukan == -1) {
+            System.out.println("Lagu dengan judul \"" + judulDicari + "\" tidak ditemukan.");
+            return;
+        }
+
+        // 2. Geser semua elemen setelah posisi yang dihapus, mundur satu langkah
+        for (int i = indexDitemukan; i < jumlahLagu - 1; i++) {
+            playlist[i] = playlist[i + 1];
+        }
+
+        // 3. Kosongkan slot terakhir yang jadi duplikat, kurangi jumlah lagu
+        playlist[jumlahLagu - 1] = null;
+        jumlahLagu--;
+
+        System.out.println("Lagu \"" + judulDicari + "\" berhasil dihapus.");
     }
 }
